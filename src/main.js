@@ -1,8 +1,10 @@
-import Vue from 'vue'; 
-import './style/common.scss';
-let app = new Vue({
+import Vue from 'vue' 
+import App from './app.vue'
+import './style/common.scss'
+import VueCompositionAPI from '@vue/composition-api'
+Vue.use(VueCompositionAPI)
+new Vue({
     el:'#app',
-    data:{
-        message:'hello vue'
-    }
+    template: '<App/>',
+    components: { App }
 })

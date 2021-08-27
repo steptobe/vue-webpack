@@ -1,6 +1,6 @@
 let path = require('path')
-// let webpack = require('webpack')
-
+let webpack = require('webpack')
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 module.exports = {
     entry:['babel-polyfill', './src/main.js'],
     output:{
@@ -12,11 +12,15 @@ module.exports = {
         historyApiFallback:true, // 是用于如果找不到界面就返回默认首页
         overlay:true
     },
-    resolve: {
-        alias: {
+    resolve: {//Resolve 配置 Webpack 如何寻找模块所对应的文件
+        alias: {//配置项通过别名来把原导入路径映射成一个新的导入路径
             'vue$': 'vue/dist/vue.esm.js'
         }
     },
+    plugins: [
+        // make sure to include the plugin for the magic
+        new VueLoaderPlugin()
+    ],
     module:{
         rules:[
             {
@@ -44,7 +48,7 @@ module.exports = {
             },
             {
                 test:/\.js$/,
-                loader:'bael-loader',
+                loader:'babel-loader',
                 exclude:/node_modules/
             },
             {
