@@ -5,7 +5,7 @@
   "main": "dist/build.js",
   "scripts": {
     "test": "npm  run test",
-    "build": "cross-env NODE_ENV=production webpack --config config/webpack.config.prod.js",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.conf.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.conf.js"
   },
   "author": "steptobe",
@@ -25,7 +25,9 @@
     "css-loader": "^5.2.6",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.2",
+    "html-withimg-loader": "^0.1.16",
     "mini-css-extract-plugin": "^2.2.0",
+    "node-sass": "^6.0.1",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "sass-loader": "^12.1.0",
     "uglifyjs-webpack-plugin": "^2.2.0",

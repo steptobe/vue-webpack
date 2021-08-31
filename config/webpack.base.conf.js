@@ -1,4 +1,28 @@
 // webpack的开发环境和生产环境共同配置
+// 开发环境的需求：
+
+// 　　　　模块热更新  （本地开启服务，实时更新）
+// 　　　　sourceMap    (方便打包调试)
+// 　　　　接口代理　    (配置proxyTable解决开发环境中的跨域问题)
+
+// 　　　　代码规范检查 (代码规范检查工具)
+
+// 　　生产环境的需求：
+
+// 　　　　提取公共代码　 　　    
+// 　　　　压缩混淆(压缩混淆代码，清除代码空格，注释等信息使其变得难以阅读)
+// 　　　　文件压缩/base64编码(压缩代码，减少线上环境文件包的大小)
+// 　　　　去除无用的代码
+
+ 
+
+// 　　开发环境和生产环境的共同需求：
+
+// 　　　　同样的入口
+// 　　　　同样的代码处理(loader处理)
+// 　　　　同样的解析配置
+
+ 
 const path = require('path');
 //清除build/dist文件夹文件
 const {CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -12,6 +36,7 @@ const OptimizeCss = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 //引入webpack
 const webpack = require('webpack');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 const NODE_ENV=process.env.NODE_ENV;
 console.log(NODE_ENV);
@@ -47,6 +72,7 @@ module.exports = {
         new MiniCssExtract({
             filename: 'style.css'
         }),
+        new VueLoaderPlugin()
     ],
     resolve: {
         // modules: [path.resolve('node_modules')],//只在当前目录下查找
@@ -83,6 +109,18 @@ module.exports = {
                     },
                     'less-loader'
                 ]
+            },
+            {
+                test: /\.scss$/,
+                use: [
+                    'vue-style-loader',
+                    'css-loader',
+                    'sass-loader'
+                ],
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             },
             /* {
                  test: /\.js$/,
