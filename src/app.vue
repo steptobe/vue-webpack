@@ -37,5 +37,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-
+h1{
+  color: #fff;
+  display: flex;
+  transform: scale(1);
+}
 </style>

@@ -1,6 +1,6 @@
 import Vue from 'vue' 
 import App from './app.vue'
-import './style/common.scss'
+import './style/common.css'
 import VueCompositionAPI from '@vue/composition-api'
 Vue.use(VueCompositionAPI)
 new Vue({
