@@ -114,26 +114,9 @@ module.exports = {
                 ],
               },
             },
-          }
-          
+          }       
         ],
-        //正则表达式匹配.less为后缀的文件
-        //使用lodaer来处理
       },
-      
-      // {
-      //   test: /\.scss$/,
-      //   use: [
-      //     "vue-style-loader",
-      //     "css-loader",
-      //     "postcss-loader",
-      //     "sass-loader",
-      //   ],
-      // },
-      // {
-      //   test: /\.sass$/,
-      //   use: ["vue-style-loader", "css-loader", "sass-loader?indentedSyntax"],
-      // },
       {
         test: /\.vue$/,
         loader: "vue-loader",
