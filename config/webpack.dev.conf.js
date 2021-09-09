@@ -18,7 +18,7 @@ module.exports = merge(base, {
         hot: true//允许热加载
     },
 //启用source-map方便调试
-    devtool: 'source-map',
+    devtool: 'eval-cheap-module-source-map',
     plugins: [
        //定义全局变量
         new webpack.DefinePlugin({

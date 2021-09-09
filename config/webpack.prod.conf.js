@@ -31,6 +31,7 @@ module.exports = merge(base, {
       }),
     ],
   },
+  devtool: 'hidden-source-map',
   plugins: [
     //使用插件定义全局变量DEV
     new webpack.DefinePlugin({

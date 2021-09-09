@@ -23,7 +23,7 @@
 const path = require("path");
 //清除build/dist文件夹文件
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-//生成创建Html入口文件
+//生成创建Html入口文件 这个插件的作用是将打包产物引入到我们提前准备好的模板
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 //将css提取到单独的文件中
 const MiniCssExtract = require("mini-css-extract-plugin");
@@ -33,6 +33,8 @@ const OptimizeCss = require("optimize-css-assets-webpack-plugin");
 const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 //引入webpack
 const webpack = require("webpack");
+// 复制静态资源到打包目录
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 
 const NODE_ENV = process.env.NODE_ENV;
@@ -65,9 +67,18 @@ module.exports = {
       },
       hash: true,
     }),
-    //提取css到style.css中
+    
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: './src/style',
+          to: 'style'
+        },
+      ],
+    }),
+    //提取css到css中
     new MiniCssExtract({
-      filename: "style.css",
+      filename: "css/[name].css",
     }),
     new VueLoaderPlugin(),
   ],
@@ -94,16 +105,15 @@ module.exports = {
         test: /\.(c|sc|sa)ss$/,
         //使用loader
         use: [
-          MiniCssExtract.loader,
+          MiniCssExtract.loader,//打包抽离css文件
           "css-loader",
           "sass-loader",
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               postcssOptions: {
                 plugins: [
-                  
-                require("autoprefixer")({
+                  require("autoprefixer")({
                     browsers: [
                       "last 30 versions",
                       "> 2%",
@@ -114,24 +124,21 @@ module.exports = {
                 ],
               },
             },
-          }       
+          },
         ],
       },
       {
         test: /\.vue$/,
         loader: "vue-loader",
         options: {
-          // vue-loader options go here
-          postcss: [
-            require("autoprefixer")({
-              browsers: [
-                "last 10 Chrome versions",
-                "last 5 Firefox versions",
-                "Safari >= 6",
-                "ie > 8",
-              ],
-            }),
-          ],
+          loaders: {
+            scss: ["vue-style-loader", "css-loader", "sass-loader"],
+            sass: [
+              "vue-style-loader",
+              "css-loader",
+              "sass-loader?indentedSyntax",
+            ],
+          },
         },
       },
       {
